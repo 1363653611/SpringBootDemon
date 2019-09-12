@@ -1,0 +1,6 @@
+#test environment
+spring:
+  profiles: prod
+
+logging:
+  config: classpath:config/logback-spring.xml

@@ -1,0 +1,16 @@
+# 控制banner 的显示状态
+spring:
+  main:
+    banner-mode: console
+  # 配置文件的选择
+  profiles:
+    active: dev # 激活dev后缀的
+    include: log # 包含后缀为log的
+
+# 查看项目中启用喝未启用的自动配置
+debug: true
+
+# 自定义start
+zbcn:
+  msg: zbcn
+

@@ -1,0 +1,10 @@
+
+server:
+  port: 9001
+
+# 自带log打印配置
+logging:
+  file: D:\test\logs\log.log
+  level:
+    root: INFO
+    com.zbcn.bootbase.controller: DEBUG
