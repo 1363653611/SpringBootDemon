@@ -5,3 +5,7 @@
 /.idea/
 /SpringBootDemon.iml
 /com-boot-starter-zbcn/com-boot-starter-zbcn.iml
+/com-boot-web/.mvn/
+/duplicate-request/mvnw
+/duplicate-request/mvnw.cmd
+/duplicate-request/.mvn/
