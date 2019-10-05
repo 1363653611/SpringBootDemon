@@ -36,4 +36,6 @@
  - Favicon 配置
   
  - WebSocket
+   * 广播模式
+   * 点对点模式
     
