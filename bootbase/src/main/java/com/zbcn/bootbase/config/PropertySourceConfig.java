@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @createTime 2019年09月07日 11:02:00
  */
 @Component
-@PropertySource("classpath:config/PropertyResource.properties")
+@PropertySource("classpath:config/PropertyResource.properties")// 类似于:<context:property-placeholder location="classpath:book.properties"/>
 @Data
 public class PropertySourceConfig {
 
