@@ -60,8 +60,28 @@
        ```
     - __desc__: 
         1. 主要是引入 @ConfigurationProperties(prefix = “book”) 注解，并且配置了属性的前缀，此时会自动将 Spring 容器中对应的数据注入到对象对应的属性中 
-  2. banner 的集成
+        
+2. banner 的集成
   
-  3. profiles 多环境配置
+3. profiles 多环境配置
   
-  4. logback 日志的集成
+4. logback 日志的集成
+  
+5. @import 和 @importResource
+ 
+  - @Import来导入配置类或者导入一个带有@Component等注解要放入Spring容器中的类
+  - 用@ImportResource来导入一个传统的xml配置文件
+  - 在启用很多组件时，我们会用到一个形如@EnableXXX的注解，比如@EnableAsync、@EnableHystrix、@EnableApollo等，点开这些注解往里追溯，你也会发现@Import的身影
+    
+   - __说明：__
+   @importResource 类似于
+     ```xml
+        <import resource="cons-injecxml" />
+     ```
+     
+   @Improt 类似于：
+   ```xml
+    <bean id="cdPlayer" class="com.jiaobuchong.soundsystem.CDPlayer">
+           <property name="cd" ref="compactDisc" />
+    </bean>
+   ```
