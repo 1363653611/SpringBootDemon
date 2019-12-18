@@ -24,6 +24,10 @@ spring:
   # \u663E\u793Asql \u4F46\u4E0D\u4F1A\u663E\u793A\u5177\u4F53\u7684\u64CD\u4F5C\u503C \u53EF\u4EE5\u66FF\u6362\u6210log4jdbc
   jpa:
     show-sql: true
+    hibernate:
+      ddl-auto: update
+  jackson:
+    serialization: true
 
 
 
