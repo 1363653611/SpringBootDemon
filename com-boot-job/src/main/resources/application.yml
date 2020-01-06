@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  tomcat:
+    uri-encoding: utf-8
+    max-connections: 2000
+    max-threads:  2000
+spring:
+  datasource:
+    druid:
+      db-type: mysql
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT
+      username: root
+      password: 123456
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 60000
+      web-stat-filter:
+        enabled: false
+      stat-view-servlet:
+        enabled: false
+    type: com.alibaba.druid.pool.DruidDataSource
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+  mapper-locations: classpath:mapper/*.xml
+
+
