@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.zbcn.combootjob.quartz.mapper.TaskMapper">
-    <resultMap id="BaseResultMap" type="com.zbcn.combootjob.quartz.entity.vo.TaskVO">
-        <id column="id" property="id" jdbcType="BIGINT" />
+<mapper namespace="com.zbcn.combootjob.schedule.dao.ScheduleMapper">
+    <resultMap id="BaseResultMap" type="com.zbcn.combootjob.schedule.entity.TaskDO">
+        <id column="id" property="id" jdbcType="VARCHAR" />
         <result column="job_name" property="jobName" jdbcType="VARCHAR" />
         <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="cron_expression" property="cronExpression"
                 jdbcType="VARCHAR" />
-        <result column="bean_class" property="beanClass" jdbcType="VARCHAR" />
         <result column="job_status" property="jobStatus" jdbcType="VARCHAR" />
         <result column="job_group" property="jobGroup" jdbcType="VARCHAR" />
         <result column="create_user" property="createUser" jdbcType="VARCHAR" />
@@ -17,51 +16,56 @@
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     </resultMap>
     <sql id="Base_Column_List">
-        id, job_name, description, cron_expression, bean_class, job_status,
+        id, job_name, description, cron_expression, job_status,
         job_group, create_user,
         create_time, update_user, update_time
     </sql>
-    <select id="get" parameterType="java.lang.Long" resultType="com.zbcn.combootjob.quartz.entity.TaskDO">
+    <select id="get" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from sys_task
-        where id = #{id,jdbcType=BIGINT}
+        from schedule_task
+        where id = #{id,jdbcType=VARCHAR}
+        order by update_time
     </select>
-    <select id="list" resultType="com.zbcn.combootjob.quartz.entity.TaskDO">
+    <select id="list" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from sys_task
-        order by id asc
+        from schedule_task
+        order by create_time asc
     </select>
-    <select id="listTaskVoByDesc" resultType="com.zbcn.combootjob.quartz.entity.vo.TaskVO">
+    <select id="listTaskVoByDesc" parameterType="com.zbcn.combootjob.schedule.entity.query.TaskQuery" resultMap="BaseResultMap">
         select
-        `id`,`job_name`,`description`,`cron_expression`,`bean_class`,`job_status`,`job_group`
-        from sys_task
+        <include refid="Base_Column_List" />
+        from schedule_task
         <where>
-            <if test="desc != null and desc != ''">
-                and description like CONCAT('%',#{desc},'%')
+            <if test="description != null and description != ''">
+                and description like CONCAT(CONCAT('%', #{description,jdbcType=VARCHAR}), '%')
+            </if>
+            <if test="jobName != null and jobName != ''">
+                and job_name like CONCAT(CONCAT('%', #{jobName,jdbcType=VARCHAR}), '%')
+            </if>
+            <if test="jobGroup != null and jobGroup != ''">
+                and job_group like CONCAT(CONCAT('%', #{jobGroup,jdbcType=VARCHAR}), '%')
             </if>
         </where>
-        <!-- <choose> <when test="sort != null and sort.trim() != ''"> order by
-            ${sort} ${order} </when> <otherwise> order by id desc </otherwise> </choose> -->
         order by id asc
     </select>
 
-    <insert id="save" parameterType="com.zbcn.combootjob.quartz.entity.TaskDO">
-        insert into sys_task (id, job_name, description,
-        cron_expression, bean_class, job_status,
+    <insert id="save" parameterType="com.zbcn.combootjob.schedule.entity.TaskDO">
+        insert into schedule_task (id, job_name, description,
+        cron_expression, job_status,
         job_group, create_user, create_time,
         update_user, update_time)
-        values (#{id,jdbcType=BIGINT}, #{jobName,jdbcType=VARCHAR},
+        values (#{id,jdbcType=VARCHAR}, #{jobName,jdbcType=VARCHAR},
         #{description,jdbcType=VARCHAR},
-        #{cronExpression,jdbcType=VARCHAR}, #{beanClass,jdbcType=VARCHAR}, #{jobStatus,jdbcType=VARCHAR},
+        #{cronExpression,jdbcType=VARCHAR}, #{jobStatus,jdbcType=VARCHAR},
         #{jobGroup,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR},
         #{createTime,jdbcType=TIMESTAMP},
         #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
     </insert>
 
-    <update id="update" parameterType="com.zbcn.combootjob.quartz.entity.TaskDO">
-        update sys_task
+    <update id="update" parameterType="com.zbcn.combootjob.schedule.entity.TaskDO">
+        update schedule_task
         <set>
             <if test="jobName != null">
                 job_name = #{jobName,jdbcType=VARCHAR},
@@ -71,9 +75,6 @@
             </if>
             <if test="cronExpression != null">
                 cron_expression = #{cronExpression,jdbcType=VARCHAR},
-            </if>
-            <if test="beanClass != null">
-                bean_class = #{beanClass,jdbcType=VARCHAR},
             </if>
             <if test="jobStatus != null">
                 job_status = #{jobStatus,jdbcType=VARCHAR},
@@ -94,15 +95,15 @@
                 update_time = #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </set>
-        where id = #{id,jdbcType=BIGINT}
+        where id = #{id,jdbcType=VARCHAR}
     </update>
 
     <delete id="remove">
-        delete from sys_task where id = #{id,jdbcType=BIGINT}
+        delete from schedule_task where id = #{id,jdbcType= VARCHAR}
     </delete>
 
     <delete id="removeBatch">
-        delete from sys_task where id in
+        delete from schedule_task where id in
         <foreach item="id" collection="array" open="(" separator=","
                  close=")">
             #{id}

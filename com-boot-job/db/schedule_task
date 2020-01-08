@@ -1,10 +1,9 @@
-DROP TABLE IF EXISTS `sys_task`;
-CREATE TABLE `sys_task` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `schedule_task`;
+CREATE TABLE `schedule_task` (
+  `id` varchar(32) NOT NULL,
   `job_name` varchar(255) DEFAULT NULL COMMENT '任务名',
   `description` varchar(255) DEFAULT NULL COMMENT '任务描述',
   `cron_expression` varchar(255) DEFAULT NULL COMMENT 'cron表达式',
-  `bean_class` varchar(255) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
   `job_status` varchar(255) DEFAULT NULL COMMENT '任务状态',
   `job_group` varchar(255) DEFAULT NULL COMMENT '任务分组',
   `create_user` varchar(64) DEFAULT NULL COMMENT '创建者',
@@ -17,4 +16,4 @@ CREATE TABLE `sys_task` (
 -- ----------------------------
 -- Records of sys_task
 -- ----------------------------
-INSERT INTO `sys_task` VALUES ('27', 'springBean', 'springBean测试', '0/10 * * * * ?', 'com.zbcn.combootjob.quartz.job.SpringBeanJob', '0', 'group', 'zbcn', '2018-06-29 23:31:42', 'zbcn', '2018-06-29 23:31:42');
+INSERT INTO `schedule_task` VALUES ('1','testJob', 'testJob测试', '0/10 * * * * ?', '0', 'group', 'zbcn', '2018-06-29 23:31:42', 'zbcn', NOW());
