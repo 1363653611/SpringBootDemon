@@ -38,4 +38,220 @@ GET	/mappings	描述全部的 URI路径，以及它们和控制器(包含Actuato
 GET	/threaddump	获取线程活动的快照
 ```
 
+### 关键依赖
+```xml
+<dependencies>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+  <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+  </dependency>
+</dependencies>
+```
+
+### 常用命令详解
+### health
+- health 主要用来检查应用的运行状态，这是我们使用最高频的一个监控点。通常使用此接口提醒我们应用实例的运行状态，以及应用不”健康“的原因，比如数据库连接、磁盘空间不够等。
+- 默认情况下 health 的状态是开放的，添加依赖后启动项目，访问：http://localhost:8080/actuator/health即可看到应用的状态：
+```json
+{
+    "status" : "UP"
+}
+```
+- 默认情况下，最终的 Spring Boot 应用的状态是由 HealthAggregator 汇总而成的，汇总的算法是：
+    1. 设置状态码顺序：`setStatusOrder(Status.DOWN, Status.OUT_OF_SERVICE, Status.UP, Status.UNKNOWN);`。
+    2. 过滤掉不能识别的状态码。
+    3. 如果无任何状态码，整个 Spring Boot 应用的状态是 UNKNOWN。
+    4. 将所有收集到的状态码按照 1 中的顺序排序。
+    5. 返回有序状态码序列中的第一个状态码，作为整个 Spring Boot 应用的状态。
+- health 通过合并几个__健康指数检查应用__ 的健康情况。Spring Boot Actuator 有几个预定义的健康指标比:
+    - DataSourceHealthIndicator
+    - DiskSpaceHealthIndicator
+    - MongoHealthIndicator
+    - RedisHealthIndicator
+- 可以在配置文件中关闭特定的健康检查指标，比如关闭 redis 的健康检查：`management.health.redise.enabled=false`
+- 默认开启这些健康检查指标
+
+#### info
+- info 就是我们自己配置在配置文件中以 info 开头的配置信息，比如我们在示例项目中的配置是：
+```properties
+info.app.name=spring-boot-actuator
+info.app.version= 1.0.0
+info.app.test= test
+```
+- 访问：http://localhost:8080/actuator/info返回部分信息如下：
+```json
+{
+  "app": {
+    "name": "spring-boot-actuator",
+    "version": "1.0.0",
+    "test":"test"
+  }
+}
+```
+
+#### bean
+- 根据示例就可以看出，展示了 bean 的别名、类型、是否单例、类的地址、依赖等信息。
+
+- 访问：http://localhost:8080/actuator/beans返回部分信息如下：
+```json
+[
+  {
+    "context": "application:8080:management",
+    "parent": "application:8080",
+    "beans": [
+      {
+        "bean": "embeddedServletContainerFactory",
+        "aliases": [
+          
+        ],
+        "scope": "singleton",
+        "type": "org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory",
+        "resource": "null",
+        "dependencies": [
+          
+        ]
+      },
+      {
+        "bean": "endpointWebMvcChildContextConfiguration",
+        "aliases": [
+          
+        ],
+        "scope": "singleton",
+        "type": "org.springframework.boot.actuate.autoconfigure.EndpointWebMvcChildContextConfiguration$$EnhancerBySpringCGLIB$$a4a10f9d",
+        "resource": "null",
+        "dependencies": [
+          
+        ]
+      }
+  }
+]
+```
+
+#### conditions
+- pring Boot 的自动配置功能非常便利，但有时候也意味着出问题比较难找出具体的原因。使用 conditions 可以在应用运行时查看代码了某个配置在什么条件下生效，或者某个自动配置为什么没有生效。
+- 访问：http://localhost:8080/actuator/conditions返回部分信息如下：
+```json
+{
+    "positiveMatches": {
+     "DevToolsDataSourceAutoConfiguration": {
+            "notMatched": [
+                {
+                    "condition": "DevToolsDataSourceAutoConfiguration.DevToolsDataSourceCondition", 
+                    "message": "DevTools DataSource Condition did not find a single DataSource bean"
+                }
+            ], 
+            "matched": [ ]
+        }, 
+        "RemoteDevToolsAutoConfiguration": {
+            "notMatched": [
+                {
+                    "condition": "OnPropertyCondition", 
+                    "message": "@ConditionalOnProperty (spring.devtools.remote.secret) did not find property 'secret'"
+                }
+            ], 
+            "matched": [
+                {
+                    "condition": "OnClassCondition", 
+                    "message": "@ConditionalOnClass found required classes 'javax.servlet.Filter', 'org.springframework.http.server.ServerHttpRequest'; @ConditionalOnMissingClass did not find unwanted class"
+                }
+            ]
+        }
+    }
+}
+```
+
+#### heapdump
+- 返回一个 GZip 压缩的 JVM 堆 dump
+- 访问：http://localhost:8080/actuator/heapdump会自动生成一个 Jvm 的堆文件 heapdump，我们可以使用 JDK 自带的 Jvm 监控工具 VisualVM 打开此文件查看内存快照
+
+### ~~shutdown~~ (postman 访问不生效)
+- 开启接口优雅关闭 Spring Boot 应用，要使用这个功能首先需要在配置文件中开启：`management.endpoint.shutdown.enabled=true`
+- 使用 post 请求访问 shutdown 接口
+```http request
+curl -X POST "http://localhost:8080/actuator/shutdown" 
+{
+    "message": "Shutting down, bye..."
+}
+```
+
+#### mappings
+- 描述全部的 URI 路径，以及它们和控制器的映射关系
+- 访问：http://localhost:8080/actuator/mappings返回部分信息如下：
+```json
+{
+  "/**/favicon.ico": {
+    "bean": "faviconHandlerMapping"
+  },
+  "{[/hello]}": {
+    "bean": "requestMappingHandlerMapping",
+    "method": "public java.lang.String com.neo.controller.HelloController.index()"
+  },
+  "{[/error]}": {
+    "bean": "requestMappingHandlerMapping",
+    "method": "public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)"
+  }
+}
+```
+
+#### threaddump
+- /threaddump 接口会生成当前线程活动的快照。这个功能非常好，方便我们在日常定位问题的时候查看线程的情况。 主要展示了线程名、线程ID、线程的状态、是否等待锁资源等信息。
+- 访问 `http://localhost:8080/actuator/threaddump` 
+```json
+[
+  {
+    "threadName": "http-nio-8088-exec-6",
+    "threadId": 49,
+    "blockedTime": -1,
+    "blockedCount": 0,
+    "waitedTime": -1,
+    "waitedCount": 2,
+    "lockName": "java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject@1630a501",
+    "lockOwnerId": -1,
+    "lockOwnerName": null,
+    "inNative": false,
+    "suspended": false,
+    "threadState": "WAITING",
+    "stackTrace": [
+      {
+        "methodName": "park",
+        "fileName": "Unsafe.java",
+        "lineNumber": -2,
+        "className": "sun.misc.Unsafe",
+        "nativeMethod": true
+      },
+      ...
+      {
+        "methodName": "run",
+        "fileName": "TaskThread.java",
+        "lineNumber": 61,
+        "className": "org.apache.tomcat.util.threads.TaskThread$WrappingRunnable",
+        "nativeMethod": false
+      }
+      ...
+    ],
+    "lockInfo": {
+      "className": "java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject",
+      "identityHashCode": 372286721
+    }
+  }
+  ...
+]
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
