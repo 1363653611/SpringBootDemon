@@ -11,3 +11,12 @@
 /duplicate-request/.mvn/
 /com-boot-admin/mvnw
 /com-boot-admin/mvnw.cmd
+/com-boot-job/.mvn/wrapper/
+/com-boot-job/mvnw
+/com-boot-job/mvnw.cmd
+/com-boot-security/.mvn/wrapper/maven-wrapper.jar
+/com-boot-security/.mvn/wrapper/
+/com-boot-security/mvnw
+/com-boot-security/mvnw.cmd
+/common/target/classes/com/zbcn/common/
+/common/common.iml
