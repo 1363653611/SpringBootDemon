@@ -9,6 +9,8 @@
 
 [Spring Boot Starters 列表](starter-list.md)
 
+[project-constructor 项目结构](project-structure.md)
+
 
 ## 博客
 
