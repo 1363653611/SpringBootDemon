@@ -1,10 +1,9 @@
-package com.zbcn.combootjob.response;
+package com.zbcn.common.response;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class ResponseResult<T> implements Serializable {
 
@@ -122,7 +121,7 @@ public class ResponseResult<T> implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ApiResult [code=" + code + ", status=" + status + ", msg=" + msg + ", data=" + data + "]";
+		return "ResponseResult [code=" + code + ", status=" + status + ", msg=" + msg + ", data=" + data + "]";
 	}
 
 	public String toJsonString() {

@@ -1,4 +1,4 @@
-package com.zbcn.combootjob.response;
+package com.zbcn.common.response;
 
 public enum ApiStatus {
 	/**
