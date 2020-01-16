@@ -20,6 +20,8 @@
     <modules>
         <module>mvc</module>
         <module>com-boot-starter-zbcn</module>
+        <module>com-boot-rabbitmq</module>
+        <module>com-boot-rabbitmq</module>
     </modules>
     <dependencies>
         <!--日志 slf4j 和logback-->

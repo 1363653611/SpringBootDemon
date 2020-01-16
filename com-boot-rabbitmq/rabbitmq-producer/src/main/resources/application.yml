@@ -1,0 +1,39 @@
+
+server:
+  port: 8001
+## producer\u914D\u7F6E
+spring:
+  application:
+    name: rabbitmq-producer
+  rabbitmq:
+    addresses: localhost:5672
+    username: admin
+    password: 123456
+    virtual-host: dev
+    publisher-returns: true #\u8FD4\u56DE\u786E\u8BA4
+    template:
+      mandatory: true
+    publisher-confirm-type: correlated
+  datasource:
+    url: jdbc:mysql://localhost:3306/rabbitmq?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driverClassName: com.mysql.cj.jdbc.Driver
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+mybatis:
+  type-aliases-package: com.zbcn.common.entity
+  configuration:
+    map-underscore-to-camel-case: true  #\u5F00\u542F\u9A7C\u5CF0\u547D\u540D,l_name -> lName
+    jdbc-type-for-null: NULL
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: true
+    cache-enabled: true #\u5F00\u542F\u4E8C\u7EA7\u7F13\u5B58
+    call-setters-on-nulls: true #map\u7A7A\u5217\u4E0D\u663E\u793A\u95EE\u9898
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    com.javayh.dao: DEBUG
