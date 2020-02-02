@@ -108,3 +108,16 @@ jackson2JsonRedisSerializer.setObjectMapper(om);
 redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
 
 ```
+
+### 集成功能
+- redis 工具
+- redisson 权限校验
+
+- ZSet 实现 `LoaderBords` 排行榜功能
+    - `com.zbcn.combootredis.service.LeaderBoardService`
+    
+- hash 实现 Redis缓存 +写入数据库实现高性能点赞功能
+    `com.zbcn.combootredis.service.LikedService`
+    
+### swagger api
+点赞接口-url: http://localhost:8080/swagger-ui.html

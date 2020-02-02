@@ -1,7 +1,12 @@
 package com.zbcn.combootredis.utils;
 
+import com.esotericsoftware.minlog.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.Cursor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -16,6 +21,7 @@ import java.util.concurrent.TimeUnit;
  *  @author zbcn8
  *  @Date 2020/1/16 15:41
  */
+@Slf4j
 @Component
 public class RedisUtil {
 
@@ -185,6 +191,17 @@ public class RedisUtil {
 	public Object hget(String key, String item) {
 		key = prefixKey(key);
 		return redisTemplate.opsForHash().get(key, item);
+	}
+
+	/**
+	 * hashScan
+	 * @param key
+	 * @param options
+	 * @return
+	 */
+	public Cursor hScan(String key, ScanOptions options){
+		key = prefixKey(key);
+		return redisTemplate.opsForHash().scan(key, options);
 	}
 
 	/**
@@ -435,6 +452,103 @@ public class RedisUtil {
 			return 0;
 		}
 	}
+
+	// =================================zSet===============================
+
+	/**
+	 *  Increment the score of element with {@code item} in sorted set by {@code num}.
+	 * @param key 键
+	 * @param item 值
+	 * @param num 需要增加的分值
+	 * @return
+	 */
+	public Double zSetIncrBy(String key, String item, Double num){
+		key = prefixKey(key);
+		Double aDouble = null;
+		try {
+			aDouble = redisTemplate.opsForZSet().incrementScore(key, item, num);
+		} catch (Exception e) {
+			log.error("zset 新增失败.",e);
+			throw e;
+		}
+		return aDouble;
+	}
+
+	/**
+	 * 单个新增元素
+	 * @param key 键
+	 * @param item 值
+	 * @param score 分值
+	 * @return
+	 */
+	public boolean zSetAdd(String key, String item, Double score){
+		key = prefixKey(key);
+		try {
+			return redisTemplate.opsForZSet().add(key,item,score);
+		} catch (Exception e) {
+			log.error("ZSet 新增失败.",e);
+			return false;
+		}
+	}
+
+	/**
+	 * 批量添加 zset
+	 * @param key
+	 * @param tuples
+	 * @return
+	 */
+	public Long  ZSetBatchAdd(String key, Set<ZSetOperations.TypedTuple<Object>> tuples){
+		key = prefixKey(key);
+
+		try {
+			return redisTemplate.opsForZSet().add(key, tuples);
+		} catch (Exception e) {
+			throw new RuntimeException("批量添加 zset 异常",e);
+		}
+	}
+
+	/**
+	 * 查询指定数量的排序集合
+	 * @param key
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public Object[] zSetSortedList(String key, Integer start, Integer end){
+		key = prefixKey(key);
+
+		try {
+			Set set = redisTemplate.opsForZSet().reverseRange(key, start, end);
+			Object[] objects = set.toArray();
+			return objects;
+		} catch (Exception e) {
+			throw new RuntimeException("ZSET 在指定数据查询失败.",e);
+		}
+	}
+
+	public Object[] zSetSortedListWithScore(String key, Integer start, Integer end){
+		key = prefixKey(key);
+
+		try {
+			Set set = redisTemplate.opsForZSet().reverseRangeWithScores(key, start, end);
+			Object[] objects = set.toArray();
+			return objects;
+		} catch (Exception e) {
+			throw new RuntimeException("ZSET 在指定数据查询失败.",e);
+		}
+	}
+
+	/**
+	 * 批量删除
+	 * @param key
+	 * @return
+	 */
+	public Long zSetRemoveByKey(String key){
+		key = prefixKey(key);
+		return redisTemplate.opsForZSet().removeRange(key,0,-1);
+
+	}
+
 	// ===============================list=================================
 
 	/**
