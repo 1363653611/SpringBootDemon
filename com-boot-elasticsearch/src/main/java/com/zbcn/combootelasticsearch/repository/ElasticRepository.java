@@ -16,6 +16,6 @@ public interface ElasticRepository extends ElasticsearchRepository<DocBean,Long>
 	Page<DocBean> findByFirstCode(String firstCode, Pageable pageable);
 
 	@Query("{\"bool\" : {\"must\" : {\"field\" : {\"secordCode.keyword\" : \"?\"}}}}")
-	Page<DocBean> findBySecordCode(String secordCode, Pageable pageable);
+	Page<DocBean> findBySecondCode(String secondCode, Pageable pageable);
 
 }

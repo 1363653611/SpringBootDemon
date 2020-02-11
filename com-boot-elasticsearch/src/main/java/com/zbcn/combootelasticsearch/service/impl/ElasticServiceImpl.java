@@ -60,7 +60,7 @@ public class ElasticServiceImpl implements IElasticService {
 
 	@Override
 	public Page<DocBean> findBySecondCode(String secondCode) {
-		return elasticRepository.findBySecordCode(secondCode,pageable);
+		return elasticRepository.findBySecondCode(secondCode,pageable);
 	}
 
 	@Override
