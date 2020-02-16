@@ -1,3 +1,4 @@
+
 /com-boot-starter-zbcn/src/main/main2.iml
 /com-boot-starter-zbcn/target/
 /mvc/target/
@@ -22,3 +23,5 @@
 /common/common.iml
 /com-boot-rabbitmq/com-boot-rabbitmq.iml
 /com-boot-rabbitmq/rabbitmq-common/rabbitmq-common.iml
+/com-boot-shiro/shiro-authentication/target/
+/com-boot-elasticsearch/.mvn/wrapper/
