@@ -42,3 +42,12 @@ Shiro提供了四大基本安全功能：认证，授权，会话管理和加密
 4. __测试(Testing)__: 测试API帮助您编写单元测试和集成测试；
 5. __运行方式(Run As)__: 允许用户以别的用户身份（如果允许）登录；
 6. __记住我(Remember Me)__: 在会话中记住用户的身份，只有在强制登录时才需要登录。 
+
+### 项目的联系顺序
+1. shiro-authentication --登录身份验证
+2. shiro-rememberme  -- 记住登录信息功能
+3. shiro-authorization --角色权限校验
+4. shiro-redis -- redis实现用户信息缓存
+5. shiro-ehcache --ehcache 实现用户信息缓存
+6. shiro-thymeleaf-tag --Shiro标签功能
+7. shiro-session  --在线会话管理
