@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  * redis 枷锁工具类：需要定义成 Bean
  */
 @Configuration
-@AutoConfigureAfter(RedisAutoConfiguration.class)
+@AutoConfigureAfter(RedisAutoConfiguration.class) // 加载配置类后再加载当前类
 public class RedisLockHelper {
 
 	private static final String DELIMITER = "|";

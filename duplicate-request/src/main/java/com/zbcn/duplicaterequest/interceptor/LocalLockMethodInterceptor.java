@@ -28,6 +28,7 @@ public class LocalLockMethodInterceptor {
 			.expireAfterWrite(5, TimeUnit.SECONDS)
 			.build();
 
+	// public 方法并且添加@LocalLock 注解
 	@Around("execution(public * *(..)) && @annotation(com.zbcn.duplicaterequest.annotation.LocalLock)")
 	public Object interceptor(ProceedingJoinPoint pjp){
 
