@@ -25,3 +25,5 @@
 /com-boot-rabbitmq/rabbitmq-common/rabbitmq-common.iml
 /com-boot-shiro/shiro-authentication/target/
 /com-boot-elasticsearch/.mvn/wrapper/
+/com-boot-global-exception/mvnw
+/com-boot-global-exception/mvnw.cmd

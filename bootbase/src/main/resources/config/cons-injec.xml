@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        ">
-    <bean id="compactDisc"
+    <bean id="blankDisc"
           class="com.zbcn.bootbase.dao.BlankDisc"
           c:_0="Sgt. Pepper's Lonely Hearts Club Band"
           c:_1="The Beatles">

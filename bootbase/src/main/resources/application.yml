@@ -7,7 +7,7 @@ spring:
     active: dev # 激活dev后缀的
     include: log # 包含后缀为log的
 
-# 查看项目中启用喝未启用的自动配置
+# 查看项目中启用还为未启用的自动配置
 debug: true
 
 # 自定义start
