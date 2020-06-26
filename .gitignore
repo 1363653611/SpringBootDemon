@@ -27,3 +27,9 @@
 /com-boot-elasticsearch/.mvn/wrapper/
 /com-boot-global-exception/mvnw
 /com-boot-global-exception/mvnw.cmd
+/classes/
+/com-boot-mdc/.mvn/
+/com-boot-mongodb/.mvn/
+/com-boot-mongodb/mvnw
+/com-boot-mongodb/mvnw.cmd
+/logs/
