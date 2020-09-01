@@ -1,0 +1,14 @@
+server:
+  port: 8001
+
+# 开启文件上传功能
+spring:
+  servlet:
+    multipart:
+      enabled: true # 开启 multipart 上传功能
+      file-size-threshold: 2KB # 文件写入磁盘的阈值
+      max-file-size: 200MB # 最大文件大小
+      max-request-size: 215MB # 最大请求大小
+# 文件存储所需参数
+file:
+  upload-dir: ./uploads

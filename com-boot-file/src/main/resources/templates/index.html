@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>下载页面</title>
+    <!--<link href="css/index.css" rel="stylesheet"/>-->
+    <!--引入css 样式-->
+    <style>
+        @import url(css/index.css);
+    </style>
+</head>
+<body>
+
+<h1 style="text-align: center">下载功能测试页面</h1>
+<div>
+    <p>测试按钮</p>
+    <button id="testButton" type="button"> Click Me</button>
+    <br/>
+    <span class="buttonOut"></span>
+</div>
+<!--下载页面-->
+<div>
+    <button onclick="window.location.href='./upload'">文件上传下载页面</button>
+</div>
+
+<!--页脚-->
+<div id="footer" th:include="@{./commons/footer.html} :: companyInfo" th:with="projectName=zbcn"/>
+</body>
+<script th:src="@{js/lib/require-2.3.6.js}" async="async" defer th:attr="data-main=@{js/index_main.js}"></script>
+</html>

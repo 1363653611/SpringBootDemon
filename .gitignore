@@ -34,3 +34,6 @@
 /com-boot-mongodb/mvnw.cmd
 /logs/
 /classes/
+/com-boot-file/mvnw
+/com-boot-file/mvnw.cmd
+/com-boot-file/.mvn/wrapper/
