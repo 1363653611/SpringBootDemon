@@ -15,6 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * 基本测试
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ComBootMybatisApplicationTests {

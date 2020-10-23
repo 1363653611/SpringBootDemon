@@ -28,7 +28,7 @@ public class TopicRabbitConfig {
 	@Bean("queueMessage")
 	public Queue queue(){
 		//rounting-key 匹配规则, 是否开启持久化
-		return new Queue(StaticNumber.JAVAYOHO_TOPIC,true);
+		return new Queue(StaticNumber.ZBCN_TOPIC,true);
 	}
 
 	/**
@@ -57,9 +57,15 @@ public class TopicRabbitConfig {
 	 */
 	@Bean
 	public Binding bindingExchangeMessage(Queue queueMessage, TopicExchange exchange) {
-		return BindingBuilder.bind(queueMessage).to(exchange).with(StaticNumber.JAVAYOHO_TOPIC);
+		return BindingBuilder.bind(queueMessage).to(exchange).with(StaticNumber.ZBCN_TOPIC);
 	}
 
+	/**
+	 * 绑定已 topic. 开头的所有队列
+	 * @param queueMessages
+	 * @param exchange
+	 * @return
+	 */
 	@Bean
 	public BindingBuilder.GenericArgumentsConfigurer bindingExchangeMessages(Queue queueMessages, Exchange exchange) {
 		return BindingBuilder.bind(queueMessages).to(exchange).with(StaticNumber.TOPIC);

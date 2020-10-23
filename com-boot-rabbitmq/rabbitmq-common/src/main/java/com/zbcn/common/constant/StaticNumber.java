@@ -19,7 +19,7 @@ public interface StaticNumber {
 	String JAVAYH_EXCHANGE = "zbcn.exchange";
 
 	/*主题模式*/
-	String JAVAYOHO_TOPIC = "topic.zbcn";
+	String ZBCN_TOPIC = "zbcn.topic";
 	String YHJ_TOPIC = "topic.yhj";
 	String TOPIC = "topic.#";
 	String TOPIC_EXCHANGE = "zbcn.topic";

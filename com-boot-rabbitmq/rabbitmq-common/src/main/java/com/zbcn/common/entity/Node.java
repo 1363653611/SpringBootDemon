@@ -22,13 +22,11 @@ public class Node implements Serializable {
         this.ip = ip;
     }
 
-    /*
-     * @Description 新增
-     * @author Dylan
-     * @date 2019/9/27
+    /**
+     * 新增
      * @param key
      * @param value
-     * @return void
+     * @param <T>
      */
     public <T> void put(String key, T value) {
         data.put(key, value);
@@ -36,7 +34,6 @@ public class Node implements Serializable {
 
     /**
      * @Description 删除
-     * @author Dylan
      * @date 2019/9/27
      * @param key
      * @return void
@@ -47,8 +44,6 @@ public class Node implements Serializable {
 
     /**
      * @Description 获取
-     * @author Dylan
-     * @date 2019/9/27
      * @param key
      * @return T
      */

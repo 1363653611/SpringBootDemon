@@ -18,3 +18,8 @@
         - 解决方案1: 在 UserMapper 接口上添加 `@Component(value = “UserMapper”);`
         - 解决方案2: 用@Resource注解替换@Autowired注解，错误消失
         
+# 简单查询 
+- `UserMapper`
+
+# 复杂查询
+        

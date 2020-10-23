@@ -41,3 +41,20 @@
       PRIMARY KEY (`id`) USING BTREE
     ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
+
+DROP TABLE IF EXISTS `t_send_message`;
+CREATE TABLE `t_send_message` (
+  `id` bigint NOT NULL AUTO_INCREMENT comment '消息主键',
+  `message_id` varchar(38) NOT NULL  COMMENT '消息唯一id',
+  `sender` varchar(255) DEFAULT NULL comment '消息发送者',
+  `sender_id` varchar(38) DEFAULT NULL COMMENT '消息发送者id',
+  `receive_id` varchar(38) DEFAULT NULL COMMENT '接受者ID',
+  `message` text DEFAULT NULL COMMENT '消息体',
+  `message_type` char(2) NOT NULL COMMENT '消息类型',
+  `annex_id` varchar(38) DEFAULT NULL COMMENT '附件id',
+  `status` char(1) DEFAULT '1' COMMENT '消息状态,1 有效，0 无效',
+  `create_time` TIMESTAMP COMMENT '创建时间',
+  `modify_time` TIMESTAMP COMMENT '修改时间',
+  `remarks` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2020101022 DEFAULT CHARSET=utf8 comment '发送消息';
