@@ -24,12 +24,32 @@ public class MessageSendController {
     private IMessageSendService messageSendService;
 
     /**
-     * 发布/订阅 方式获取消息
+     * 发布/订阅 方式发布消息
      * @param sendMessage
      * @return
      */
     @PostMapping(path = "/topic", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseResult topicSend(@RequestBody TSendMessage sendMessage){
         return ResponseResult.success(messageSendService.topicSend(sendMessage));
+    }
+
+    /**
+     * 直接 方式获取消息
+     * @param sendMessage
+     * @return
+     */
+    @PostMapping(path = "/direct", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseResult directSend(@RequestBody TSendMessage sendMessage){
+        return ResponseResult.success(messageSendService.directSend(sendMessage));
+    }
+
+    /**
+     * 广播 方式获取消息
+     * @param sendMessage
+     * @return
+     */
+    @PostMapping(path = "/fanout", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseResult fanoutSend(@RequestBody TSendMessage sendMessage){
+        return ResponseResult.success(messageSendService.fanoutSend(sendMessage));
     }
 }

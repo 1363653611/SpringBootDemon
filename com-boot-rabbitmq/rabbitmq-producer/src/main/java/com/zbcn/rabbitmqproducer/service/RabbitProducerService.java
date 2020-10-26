@@ -40,9 +40,20 @@ public class RabbitProducerService {
 		brokerMessageLogMapper.insertSelective(brokerMessageLog);
 		//构建回调返回的数据
         CorrelationData correlationData = MqUtil.buildCorrelationData(order);
-        rabbitSender.sendExchange(StaticNumber.TOPIC_EXCHANGE,StaticNumber.ZBCN_TOPIC,order,correlationData);
+        rabbitSender.sendExchange(StaticNumber.TOPIC_EXCHANGE,StaticNumber.TOPIC_KEY,order,correlationData);
 	}
 
 
-
+	/**
+	 * direct 直接方式发送消息
+	 * @param order
+	 */
+	public void directSend(Order order) {
+		orderMapper.insert(order);
+		BrokerMessageLog brokerMessageLog = MsgBuildUtil.buildBrokerMsgLog(order);
+		brokerMessageLogMapper.insertSelective(brokerMessageLog);
+		//构建回调返回的数据
+		CorrelationData correlationData = MqUtil.buildCorrelationData(order);
+		rabbitSender.sendExchange(StaticNumber.DIRECT_EXCHANGE_NAME,StaticNumber.DIRECT_QUEUE_ROUTE_KEY,order,correlationData);
+	}
 }

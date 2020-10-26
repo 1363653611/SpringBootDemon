@@ -1,9 +1,11 @@
 package com.zbcn.rabbitmqconsumer.service;
 
 import com.rabbitmq.client.Channel;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zbcn.common.constant.AckAction;
 import com.zbcn.common.entity.ErrorAckMessage;
 import com.zbcn.common.entity.Order;
+import com.zbcn.common.entity.TSendMessage;
 import com.zbcn.common.mapper.ErrorAckMessageDao;
 import com.zbcn.common.utils.FastJsonConvertUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,7 @@ import static com.zbcn.common.constant.StaticNumber.*;
 
 @Slf4j
 @Component
-@RabbitListener(queues = JAVAYOHO_TOPIC)
+@RabbitListener(queues = ZBCN_TOPIC)
 public class TopicService {
 
 	@Resource
@@ -37,7 +39,15 @@ public class TopicService {
 
 	String  className = this.getClass().getName();
 
-	@RabbitListener(queues = JAVAYOHO_TOPIC)
+	/**
+	 * 监听消息
+	 *  "@Payload" 和 MessageConvert 一起使用，用来解析 Message 消息
+	 * @param order
+	 * @param headers
+	 * @param channel
+	 * @throws IOException
+	 */
+	@RabbitListener(queues = ZBCN_TOPIC)
 	@RabbitHandler
 	public void receiveMessage(@Payload Order order, @Headers Map<String,Object> headers, Channel channel) throws IOException {
 
@@ -63,47 +73,9 @@ public class TopicService {
 			log.info("订单ID："+order.getId());
 			String messageId = order.getMessageId();
 			System.out.println("获取到的消息:" + messageId);
+
 		} catch (Exception e) {
-			//这里需要根据业务需求，看错误方式是否可以重新入队
-			//需要考虑全面，否则会造成MQ阻塞，一直循环调用
-			String message = e.getMessage();
-			log.info(message);
-			//添加尝试次数显示，达到最大限制次数，消费依旧失败，
-			//不再进行尝试，存入库中，后期手动维护
-			if(message == null){//直接入库
-				ackAction = AckAction.ACK_REJECT;
-				ErrorAckMessage errorAckMessage =
-						ErrorAckMessage.builder().
-								id(order.getMessageId()).
-								errorMethod(className+"."+Thread.currentThread().getStackTrace()[1].getMethodName()).
-								errorMessage(message).
-								createTime(DateFormatUtils.format(new Date(),YMDHMS)).
-								status(CONSUMER_FAILURE).
-								message(FastJsonConvertUtil.convertObjectToJSON(order)).
-								remarks("消费失败，为入队，请手动处理").
-								build();
-				errorAckMessageDao.insertAll(errorAckMessage);
-			}
-			if(message != null){//达到最大次数入库
-				ackAction = AckAction.ACK_RETRY;
-				//redis 来记录循环此申诉
-				long incr = incr(order.getMessageId(), 1);
-				//重复尝试入队三次，在此消费失败将放弃入队
-				if(incr>3){
-					ackAction = AckAction.ACK_REJECT;
-					ErrorAckMessage errorAckMessage =
-							ErrorAckMessage.builder().
-									id(order.getMessageId()).
-									errorMethod(className+"."+Thread.currentThread().getStackTrace()[1].getMethodName()).
-									errorMessage(message).
-									createTime(DateFormatUtils.format(new Date(),YMDHMS)).
-									status(CONSUMER_TRY_FAILURE).
-									message(FastJsonConvertUtil.convertObjectToJSON(order)).
-									remarks("消费失败，入队尝试次数达到最大次数，请手动处理").
-									build();
-					errorAckMessageDao.insertAll(errorAckMessage);
-				}
-			}
+			ackAction = handleError(order, ackAction, e);
 
 		}finally {
 			//消费失败被拒绝 应答模式
@@ -115,11 +87,11 @@ public class TopicService {
 			if (ackAction == AckAction.ACK_SUCCESSFUL) {
 				//ACK,确认一条消息已经被消费
 				channel.basicAck(deliveryTag,multiple);
-				log.info("cheng");
+				log.info("发送消息被确认，最后处理。。");
 				try {
 					Thread.sleep(10);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					log.error("睡眠被打断",e);
 				}
 			} else if (ackAction == AckAction.ACK_RETRY) {//重新加入队列
 				channel.basicNack(deliveryTag, false, true);
@@ -140,6 +112,64 @@ public class TopicService {
 		 * 这个状态下可以兼顾吞吐量也很高，同时也不容易造成内存溢出的问题。
 		 */
 //        channel.basicQos(150);
+	}
+
+	/**
+	 * 接收消息异常后的处理
+	 * @param object
+	 * @param ackAction
+	 * @param e
+	 * @return
+	 */
+	private String handleError(Object object, String ackAction, Exception e) {
+		//这里需要根据业务需求，看错误方式是否可以重新入队
+		//需要考虑全面，否则会造成MQ阻塞，一直循环调用
+		String message = e.getMessage();
+		log.info(message);
+		String msg = null;
+		if(object instanceof Order){
+			msg = ((Order)object).getMessageId();
+		}
+		if(object instanceof TSendMessage){
+			msg = ((TSendMessage)object).getMessageId();
+		}
+		//添加尝试次数显示，达到最大限制次数，消费依旧失败，
+		//不再进行尝试，存入库中，后期手动维护
+		if(message == null){//直接入库
+			ackAction = AckAction.ACK_REJECT;
+			ErrorAckMessage errorAckMessage =
+					ErrorAckMessage.builder().
+							id(msg).
+							errorMethod(className+"."+Thread.currentThread().getStackTrace()[1].getMethodName()).
+							errorMessage(message).
+							createTime(DateFormatUtils.format(new Date(),YMDHMS)).
+							status(CONSUMER_FAILURE).
+							message(FastJsonConvertUtil.convertObjectToJSON(object)).
+							remarks("消费失败，为入队，请手动处理").
+							build();
+			errorAckMessageDao.insertAll(errorAckMessage);
+		}
+		if(message != null){//达到最大次数入库
+			ackAction = AckAction.ACK_RETRY;
+			//redis 来记录循环此申诉
+			long incr = incr(msg, 1);
+			//重复尝试入队三次，在此消费失败将放弃入队
+			if(incr>3){
+				ackAction = AckAction.ACK_REJECT;
+				ErrorAckMessage errorAckMessage =
+						ErrorAckMessage.builder().
+								id(msg).
+								errorMethod(className+"."+Thread.currentThread().getStackTrace()[1].getMethodName()).
+								errorMessage(message).
+								createTime(DateFormatUtils.format(new Date(),YMDHMS)).
+								status(CONSUMER_TRY_FAILURE).
+								message(FastJsonConvertUtil.convertObjectToJSON(object)).
+								remarks("消费失败，入队尝试次数达到最大次数，请手动处理").
+								build();
+				errorAckMessageDao.insertAll(errorAckMessage);
+			}
+		}
+		return ackAction;
 	}
 
 	/**

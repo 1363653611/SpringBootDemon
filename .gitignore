@@ -37,3 +37,4 @@
 /com-boot-file/mvnw
 /com-boot-file/mvnw.cmd
 /com-boot-file/.mvn/wrapper/
+/com-boot-rabbitmq/rabbitmq-common/target/classes/

@@ -18,10 +18,10 @@ public class RabbitSender {
 
 	/**
 	 * 发送 message
-	 * @param exchangeName
-	 * @param routingKey
-	 * @param t
-	 * @param correlationData
+	 * @param exchangeName 交换机名称
+	 * @param routingKey 路由键
+	 * @param t 数据
+	 * @param correlationData 关联发布者 确认机制
 	 * @param <T>
 	 */
 	public <T> void sendExchange(String exchangeName, String routingKey, T t, CorrelationData correlationData) {

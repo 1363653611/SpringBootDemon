@@ -1,7 +1,7 @@
 
 server:
   port: 8001
-## producer\u914D\u7F6E
+## producer配置
 spring:
   application:
     name: rabbitmq-producer
@@ -9,8 +9,8 @@ spring:
     addresses: localhost:5672
     username: admin
     password: 123456
-    virtual-host: dev
-    publisher-returns: true #\u8FD4\u56DE\u786E\u8BA4
+    virtual-host: dev # 虚拟host 可以不设置,使用server默认host
+    publisher-returns: true #返回确认
     template:
       mandatory: true
     publisher-confirm-type: correlated
@@ -26,12 +26,12 @@ spring:
 mybatis:
   type-aliases-package: com.zbcn.common.entity
   configuration:
-    map-underscore-to-camel-case: true  #\u5F00\u542F\u9A7C\u5CF0\u547D\u540D,l_name -> lName
+    map-underscore-to-camel-case: true  #开启驼峰命名,l_name -> lName
     jdbc-type-for-null: NULL
     lazy-loading-enabled: true
     aggressive-lazy-loading: true
-    cache-enabled: true #\u5F00\u542F\u4E8C\u7EA7\u7F13\u5B58
-    call-setters-on-nulls: true #map\u7A7A\u5217\u4E0D\u663E\u793A\u95EE\u9898
+    cache-enabled: true #开启二级缓存
+    call-setters-on-nulls: true #map 空列不显示问题
   mapper-locations: classpath:mapper/*.xml
 
 logging:

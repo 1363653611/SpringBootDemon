@@ -24,7 +24,7 @@ public class RabbitProducerController {
 	public ResponseResult topicSend(){
 		Order order= Order.builder().id(UUIDUtils.getUidInt()).messageId(UUIDUtils.getUid()).name(UUIDUtils.getUid()).build();
 		rabbitProducerService.topicSend(order);
-		return ResponseResult.success("发送成功.");
+		return ResponseResult.success("topic 发送成功.");
 	}
 
 
@@ -35,7 +35,7 @@ public class RabbitProducerController {
 	@GetMapping("/direct")
 	public ResponseResult directSend(){
 		Order order= Order.builder().id(UUIDUtils.getUidInt()).messageId(UUIDUtils.getUid()).name(UUIDUtils.getUid()).build();
-		rabbitProducerService.topicSend(order);
-		return ResponseResult.success("发送成功.");
+		rabbitProducerService.directSend(order);
+		return ResponseResult.success("direct 发送成功.");
 	}
 }

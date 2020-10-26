@@ -8,10 +8,12 @@ import org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.listener.RabbitListenerEndpointRegistrar;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
 
+@Configuration
 public class RabbitmqConfig implements RabbitListenerConfigurer {
 	@Override
 	public void configureRabbitListeners(RabbitListenerEndpointRegistrar registrar) {
@@ -19,6 +21,11 @@ public class RabbitmqConfig implements RabbitListenerConfigurer {
 	}
 
 
+	/**
+	 * 消息转换处理类，将消息中的二进制对象，转换为指定对象
+     *  *MessageConverter 和"@Payload"一起使用，用来解析 Message 消息，直接获取对象
+	 * @return
+	 */
 	@Bean
 	MessageHandlerMethodFactory messageHandlerMethodFactory() {
 		DefaultMessageHandlerMethodFactory messageHandlerMethodFactory = new DefaultMessageHandlerMethodFactory();
@@ -32,12 +39,12 @@ public class RabbitmqConfig implements RabbitListenerConfigurer {
 	}
 
 
-//	@Bean
-//	public RabbitListenerContainerFactory<?> rabbitListenerContainerFactory(ConnectionFactory connectionFactory){
-//		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-//		factory.setConnectionFactory(connectionFactory);
-//		factory.setMessageConverter(new Jackson2JsonMessageConverter());
-//		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-//		return factory;
-//	}
+	@Bean
+	public RabbitListenerContainerFactory<?> rabbitListenerContainerFactory(ConnectionFactory connectionFactory){
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory);
+		factory.setMessageConverter(new Jackson2JsonMessageConverter());
+		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+		return factory;
+	}
 }
