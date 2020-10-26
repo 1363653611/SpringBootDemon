@@ -13,6 +13,12 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.DefaultMessageHandlerMethodFactory;
 import org.springframework.messaging.handler.annotation.support.MessageHandlerMethodFactory;
 
+/**
+ *  消息消费相关配置类
+ *  <br/>
+ *  @author zbcn8
+ *  @since  2020/10/26 14:36
+ */
 @Configuration
 public class RabbitmqConfig implements RabbitListenerConfigurer {
 	@Override

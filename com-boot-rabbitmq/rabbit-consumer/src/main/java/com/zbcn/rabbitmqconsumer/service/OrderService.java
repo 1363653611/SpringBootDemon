@@ -29,7 +29,7 @@ import static com.zbcn.common.constant.StaticNumber.*;
 @Slf4j
 @Component
 @RabbitListener(queues = ZBCN_TOPIC)
-public class TopicService {
+public class OrderService {
 
 	@Resource
 	private ErrorAckMessageDao errorAckMessageDao;
