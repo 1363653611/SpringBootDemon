@@ -5,7 +5,7 @@ import com.zbcn.common.entity.BrokerMessageLog;
 import com.zbcn.common.entity.Order;
 import com.zbcn.common.mapper.BrokerMessageLogMapper;
 import com.zbcn.common.utils.FastJsonConvertUtil;
-import com.zbcn.rabbitmqproducer.service.RabbitProducerService;
+import com.zbcn.rabbitmqproducer.service.RabbitOrderProducerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,7 +27,7 @@ import static com.zbcn.common.constant.StaticNumber.FAILURE_DELIVERY;
 public class RetryMessageTasker {
 
 	@Autowired
-	private RabbitProducerService rabbitProducerService;
+	private RabbitOrderProducerService rabbitOrderProducerService;
 
 	@Autowired
 	private BrokerMessageLogMapper brokerMessageLogMapper;
@@ -48,7 +48,7 @@ public class RetryMessageTasker {
 				});
 				try {
 					//重新发送消息
-					rabbitProducerService.topicSend(reSendOrder);
+					rabbitOrderProducerService.topicSend(reSendOrder);
 				} catch (Exception e) {
 					e.printStackTrace();
 					log.info("异常信息" +e);

@@ -19,7 +19,7 @@ import java.util.Date;
 
 
 @Service
-public class RabbitProducerService {
+public class RabbitOrderProducerService {
 
 	@Resource
 	private OrderMapper orderMapper;
