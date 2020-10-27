@@ -50,7 +50,7 @@ public class RabbitmqConfig implements RabbitListenerConfigurer {
 		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
 		factory.setConnectionFactory(connectionFactory);
 		factory.setMessageConverter(new Jackson2JsonMessageConverter());
-		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-		return factory;
+		factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);//RabbitMQ默认是自动确认，这里改为手动确认消息
+        return factory;
 	}
 }
