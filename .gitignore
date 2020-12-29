@@ -39,3 +39,4 @@
 /com-boot-file/.mvn/wrapper/
 /com-boot-rabbitmq/rabbitmq-common/target/classes/
 /com-boot-rabbitmq/rabbitmq-common/target/maven-status/maven-compiler-plugin/compile/default-compile/
+/com-boot-auth/com-boot-auth.iml
