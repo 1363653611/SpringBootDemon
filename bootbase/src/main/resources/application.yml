@@ -12,5 +12,4 @@ debug: true
 
 # 自定义start
 zbcn:
-  msg: zbcn
-
+  msg: 你好

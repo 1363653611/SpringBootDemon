@@ -1,0 +1,26 @@
+{
+  "hints":[{
+    "name":"zbcn.msg",
+    "values":[{
+      "value":"你好",
+      "description":"中文方式打招呼"
+    },{
+      "value":"Hi",
+      "description":"英文方式打招呼"
+    }]
+  }],
+  "groups":[
+    {
+      "sourceType": "com.zbcn.ZbcnServiceProperties",
+      "name": "hello",
+      "type": "com.zbcn.ZbcnServiceProperties"
+    }],
+  "properties":[
+    {
+      "sourceType": "com.zbcn.ZbcnServiceProperties",
+      "name": "zbcn.msg",
+      "type": "java.lang.String",
+      "description": "打招呼的内容",
+      "defaultValue": "Worlds"
+    }]
+}
