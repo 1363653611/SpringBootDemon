@@ -17,7 +17,7 @@ public class SelDefStartController {
 
     @Autowired
     private ZbcnService zbcnService;
-    @GetMapping("self_start")
+    @GetMapping("/self_start")
     public String selfStart(){
 
         return zbcnService.getMsg();
