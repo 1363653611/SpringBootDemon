@@ -40,3 +40,4 @@
 /com-boot-rabbitmq/rabbitmq-common/target/classes/
 /com-boot-rabbitmq/rabbitmq-common/target/maven-status/maven-compiler-plugin/compile/default-compile/
 /com-boot-auth/com-boot-auth.iml
+/com-zbcn-utils-starter/com-zbcn-utils-starter.iml

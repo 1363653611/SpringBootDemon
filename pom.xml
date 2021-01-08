@@ -23,6 +23,7 @@
         <module>com-boot-rabbitmq</module>
         <module>com-boot-shiro</module>
         <module>com-boot-auth</module>
+        <module>com-zbcn-utils-starter</module>
     </modules>
     <dependencies>
         <!--日志 slf4j 和logback-->

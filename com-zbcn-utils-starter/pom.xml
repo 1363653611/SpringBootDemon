@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>com-zbcn-utils-starter</artifactId>
+    <properties>
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.3.3.RELEASE</spring-boot.version>
+        <aliyun-sms.version>1.1.0</aliyun-sms.version>
+        <aliyun-sdk.version>4.3.8</aliyun-sdk.version>
+        <lombok.version>1.18.8</lombok.version>
+    </properties>
+    <modules>
+        <module>com-zbcn-starter</module>
+        <module>com-zbcn-starter-config</module>
+    </modules>
+
+
+
+</project>
