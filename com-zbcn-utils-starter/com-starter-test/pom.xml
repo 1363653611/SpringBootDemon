@@ -29,10 +29,17 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--自定义starter-->
         <dependency>
             <groupId>com.zbcn</groupId>
-            <artifactId>com-zbcn-utils-starter</artifactId>
+            <artifactId>com-zbcn-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.5.4</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
