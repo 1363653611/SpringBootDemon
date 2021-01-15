@@ -1,0 +1,32 @@
+{
+  "groups": [
+    {
+      "name": "zbcn.redis",
+      "type": "com.zbcn.config.properties.RedisProperty",
+      "sourceType": "com.zbcn.config.properties.RedisProperty"
+    }
+  ],
+  "properties": [
+    {
+      "name": "zbcn.redis.host",
+      "type": "java.lang.String",
+      "sourceType": "com.zbcn.config.properties.RedisProperty"
+    },
+    {
+      "name": "zbcn.redis.password",
+      "type": "java.lang.String",
+      "sourceType": "com.zbcn.config.properties.RedisProperty"
+    },
+    {
+      "name": "zbcn.redis.port",
+      "type": "java.lang.String",
+      "sourceType": "com.zbcn.config.properties.RedisProperty"
+    },
+    {
+      "name": "zbcn.redis.username",
+      "type": "java.lang.String",
+      "sourceType": "com.zbcn.config.properties.RedisProperty"
+    }
+  ],
+  "hints": []
+}

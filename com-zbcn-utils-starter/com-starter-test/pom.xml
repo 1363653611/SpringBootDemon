@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.7.RELEASE</version>
+        <version>2.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.zbcn</groupId>
-    <artifactId>com-zbcn-starter</artifactId>
+    <groupId>com.zbcn.demo</groupId>
+    <artifactId>com-starter-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>com-zbcn-starter</name>
-    <description>starter for utils</description>
+    <name>com-starter-test</name>
+    <description>测试 starter的项目</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -21,15 +21,28 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--增加springboot 的自动配置包-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>com.zbcn</groupId>
-            <artifactId>com-zbcn-starter-config</artifactId>
+            <artifactId>com-zbcn-utils-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -1,13 +1,13 @@
-package com.zbcn.starter;
+package com.zbcn.demo.comstartertest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ComZbcnStarterApplication {
+public class ComStarterTestApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ComZbcnStarterApplication.class, args);
+        SpringApplication.run(ComStarterTestApplication.class, args);
     }
 
 }
