@@ -1,6 +1,10 @@
 spring:
   elasticsearch:
     rest:
-      uris: http://127.0.0.1:9200
-      username: elasticp
+      uris: http://47.99.133.237:9200
+      username: elastic
       password: 123456
+logging:
+  level:
+    root: trace
+    org.springframework.data.elasticsearch.client.WIRE : trace

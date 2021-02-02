@@ -12,14 +12,14 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 @NoArgsConstructor
 @AllArgsConstructor
 //其中indexName代表ES索引名称，type代表文档名称。
-@Document(indexName = "zbcn",type = "_doc", shards = 1, replicas = 0)
+@Document(indexName = "zbcn", shards = 1, replicas = 0)
 public class DocBean {
 
 	@Id
 	private Long id;
 
 	@Field(type = FieldType.Keyword)
-	private String fistCode;
+	private String firstCode;
 
 	//index=true代表是否开启索引，即该字段数据是否能被搜索到,默认为true
 	@Field(index = true, type = FieldType.Keyword)
