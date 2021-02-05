@@ -6,5 +6,7 @@ spring:
       password: 123456
 logging:
   level:
-    root: trace
-    org.springframework.data.elasticsearch.client.WIRE : trace
+    root: info
+    #org.springframework.data.elasticsearch.client.WIRE: trace
+    #org.springframework.data.elasticsearch.core: trace
+    org.springframework.data.elasticsearch: trace
